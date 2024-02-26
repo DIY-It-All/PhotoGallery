@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hello</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+    <style>
+      body,
+      html {
+        overflow-x: hidden;
+      }
+      .sm-grid-col-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .sm_nav_fold {
+        display: flex;
+        justify-content: start;
+      }
+      @media only screen and (max-width: 550px) {
+        .sm-grid-col-2 {
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .sm_nav_fold {
+          display: grid;
+          padding-left: 10px;
+          justify-content: start;
+        }
+        .sm_center {
+          text-align: center;
+          padding: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="grid sm-grid-col-2 md:grid-cols-2 lg:grid:cols-2 content-between p-5 bg-slate-400 rounded-b-lg"
+    >
+      <div class="left float-left">
+        <p id="title" class="p-2 sm_center text-xl text-slate-100">
+          PhotoGallery
+        </p>
+      </div>
+      <div
+        class="sm_nav_fold md:flex md:justify-evenly lg:flex lg:justify-evenly"
+      >
+        <a href="" class="p-2 text-slate-100">home</a>
+        <a href="" class="p-2 text-slate-100">home</a>
+        <a href="" class="p-2 text-slate-100">home</a>
+        <a href="" class="p-2 text-slate-100">home</a>
+      </div>
+    </nav>
+
+    <div id="attentionGrab" class="p-[8vh]">
+      <p
+        id="CarouselRepacement"
+        class="text-5xl text-center text-slate-500"
+      ></p>
+    </div>
+
+    <div
+      id="main"
+      class="w-screen bg-slate-200 flex flex-row flex-wrap justify-evenly"
+    >
+      <img
+        src="I.jpeg"
+        alt="..."
+        class="self-center items-center p-2 m-1 border-black border-2"
+      />
+      <img
+        src="I.jpeg"
+        alt="..."
+        class="self-center items-center p-2 m-1 border-black border-2"
+      />
+      <img
+        src="I.jpeg"
+        alt="..."
+        class="self-center items-center p-2 m-1 border-black border-2"
+      />
+      <img
+        src="I.jpeg"
+        alt="..."
+        class="self-center items-center p-2 m-1 border-black border-2"
+      />
+      <img
+        src="I.jpeg"
+        alt="..."
+        class="self-center items-center p-2 m-1 border-black border-2"
+      />
+    </div>
+    <input type="file" class="hidden" name="file" id="file" multiple />
+    <button
+      onclick="document.querySelector(`input[type='file']`).click();"
+      class="fixed end-8 bottom-8 bg-slate-800 rounded-full hover:bg-slate-600 active:bg-slate-400"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="60"
+        height="60"
+        fill="#33CC99"
+        class="bi bi-plus-square-fill"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0"
+        />
+      </svg>
+    </button>
+
+    <div id="footer_credits" class="p-4 text-center bg-teal-500">
+      <p>
+        <strong
+          >A creation by
+          <a
+            class="text-teal-900 hover:text-teal-700"
+            href="https://github.com/DIY-It-All"
+            >DIY-It-All</a
+          >
+          on github. Please don't remove this footer.</strong
+        >
+      </p>
+    </div>
+    <script>
+      var typewriter = new Typewriter(
+        document.querySelector("#CarouselRepacement"),
+        {
+          loop: true,
+        }
+      );
+
+      typewriter
+        .typeString("All your photos on an easy to access server!!!")
+        .pauseFor(2500)
+        .deleteAll()
+        .typeString("Open Source and can be used for private servers!!")
+        .pauseFor(2500)
+        .deleteAll()
+        .typeString(
+          "<strong class='text-6xl'>PhotoGallery</strong>, download the template from github now!!"
+        )
+        .pauseFor(2500)
+        .start();
+
+      document.querySelector(`input[type='file']`).onchange = () => {
+        if (
+          confirm(
+            `adding -> ${
+              document.querySelector(`input[type='file']`).files.length
+            } file(s) to server, do you want to proceed`
+          )
+        ) {
+          addImg();
+        }
+      };
+      function addImg() {
+        let files = document.querySelector('input[type="file"]').files;
+        for (let i = 0; i < files.length; i++) {
+          let xhttp = new XMLHttpRequest();
+          xhttp.open("post", "add", false);
+          let data = new FormData();
+          data.append("file", files[i]);
+          xhttp.send(data);
+        }
+      }
+    </script>
+  </body>
+</html>
